@@ -1,0 +1,49 @@
+.order_list_btn {
+	all: unset;
+	font-size: 15px;
+	color: darkgray;
+	outline: solid darkgray 1px;
+	padding: 4px;
+	border-radius: 10px;
+}
+
+.order_list_btn:hover {
+	color: white; 
+	background-color: darkgray;
+}
+
+div.shortcodes_title.mb-30 {
+	margin: 20px 0px;
+}
+
+th,td {
+	text-align: center;
+}
+
+.my-account-content.mb-50 {
+	margin-bottom: 20px;
+}
+
+#order_all_delete_btn {
+	float: right;
+}
+
+.col-md-6.mb-3.search {
+	display: flex;
+	align-items: flex-end;
+}
+
+.shortcodes_title.mb-30 h6,
+#reciever_info_h5 {
+	display: inline-block;
+}
+
+#reciever_info_h5 + div {
+	display: inline-block;
+	margin-left: 10px;
+	font-size: 12px;
+}
+
+.shortcodes_content {
+	border: none;
+}

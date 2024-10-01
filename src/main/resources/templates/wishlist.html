@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- include_common_top -->
+    <th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+    <link rel="stylesheet" href="css/shop/wishlist.css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+    <th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+
+    <!-- Breadcumb Area -->
+    <div class="breadcumb_area">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <h5>Wishlist</h5>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                        <li class="breadcrumb-item active">Wishlist</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Area -->
+
+    <!-- Wishlist Table Area -->
+    <div class="wishlist-table section_padding_100 clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="cart-table wishlist-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-30">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><input type="checkbox" id="check_all"></th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Unit Price</th>
+                                        <th scope="col">Add to Cart</th>
+                                        <th scope="col" id="wish_all_delete_btn"><i class="icofont-ui-delete"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- wishlist item -->
+                                    <tr th:if="${wishListList.isEmpty()}">
+                                        <td colspan="6">등록된 위시리스트가 없습니다. 위시리스트를 등록해주세요 🙂</td>
+                                    </tr>
+                                    <tr th:each="wishList : ${wishListList}" th:id="'wish_item_' + ${wishList.w_no}">
+                                        <th scope="row">
+                                            <input type="checkbox" th:id="'wish_check_' + ${wishList.w_no}" 
+                                                   th:data-w_no="${wishList.w_no}" th:data-p_no="${wishList.product.p_no}">
+                                        </th>
+                                        <td>
+                                            <img th:src="@{'img/p_img/' + ${wishList.product.imageList[0].im_name}}" 
+                                                 alt="Product">
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/product_detail(p_no=${wishList.product.p_no})}">
+                                                <span th:text="${wishList.product.p_name}"></span>
+                                            </a>
+                                        </td>
+                                        <td>&#8361;<span th:text="${#numbers.formatInteger(wishList.product.p_price, 0, 'COMMA')}"></span></td>
+                                        <td><a href="#" class="btn btn-primary btn-sm wish_add_to_cart_btn" 
+                                               th:data-p_no="${wishList.product.p_no}">Add</a></td>
+                                        <th scope="row">
+                                            <a href="" class="wish_item_del_btn" th:data-w_no="${wishList.w_no}">
+                                                <i class="icofont-close"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="cart-footer text-right">
+                        <div class="back-to-shop">
+                            <div th:if="${!wishListList.isEmpty()}">
+                                <a href="#" class="btn btn-primary wish_item_sel_cart_btn">Add Items</a>
+                                <a href="#" class="btn btn-primary wish_item_sel_del_btn">Delete Items</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Wishlist Table Area -->
+
+    <!-- Footer Area -->
+    <th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <th:block th:replace="common/include_common_script :: script"></th:block>
+    <script src="js/shop/wishlist.js"></script>
+
+</body>
+
+</html>

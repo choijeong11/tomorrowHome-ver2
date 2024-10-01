@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'war'
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.itwill.tomorrowHome'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    sourceCompatibility = '17' // 소스 호환성 설정
+    targetCompatibility = '17' // 타겟 호환성 설정
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.projectlombok:lombok:1.18.24' 
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// querydsl generated 경로 설정
+def querydslDir = "$buildDir/generated/querydsl"
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.generatedSourceOutputDirectory = file(querydslDir)
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+sourceSets {
+    main.java.srcDir querydslDir
+}

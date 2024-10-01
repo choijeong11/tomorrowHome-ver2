@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- include_common_top -->
+    <th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+    <link rel="stylesheet" href="css/shop/cart.css">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+    <th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+    
+    <!-- Breadcumb Area -->
+    <div class="breadcumb_area">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <h5>Cart</h5>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item active">Cart</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Area -->
+
+    <!-- Cart Area -->
+    <div class="cart_area section_padding_100_70 clearfix">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-12">
+                    <div class="cart-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-30">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><input type="checkbox" id="check_all"></th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Product</th>
+                                        <th scope="col">Unit Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col"><i class="icofont-ui-delete"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cart_item_tbody">
+                                
+                                <!-- cart item -->
+                                <tr th:if="${cartList.size() == 0}">
+                                    <td colspan="7">카트에 등록된 상품이 없습니다. 상품을 등록해주세요 🙂</td>
+                                </tr>
+                                
+                                <th:block th:each="cart : ${cartList}">
+                                    <tr th:id="'cart_item_' + ${cart.c_no}">
+                                        <th scope="row">
+                                            <input type="checkbox" th:data-c_no="${cart.c_no}">
+                                        </th>
+                                        <td>
+                                            <img th:src="@{img/p_img/{imgName}(imgName=${cart.product.imageList[0].im_name})}" alt="Product">
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/product_detail(p_no=${cart.product.p_no})}" th:text="${cart.product.p_name}">Product Name</a>
+                                        </td>
+                                        <td th:text="&#8361; + ${#numbers.formatInteger(cart.product.p_price, 0, 'COMMA')}"></td>
+                                        <td>
+                                            <div class="quantity">
+                                                <input type="number" class="qty-text" step="1" min="1" max="99" name="quantity" th:value="${cart.c_qty}" th:data-c_no="${cart.c_no}">
+                                            </div>
+                                        </td>
+                                        <td class="item_total" th:id="'item_total_' + ${cart.c_no}" th:text="&#8361; + ${#numbers.formatInteger(cart.product.p_price * cart.c_qty, 0, 'COMMA')}"></td>
+                                        <th scope="row">
+                                            <i class="icofont-close" th:data-c_no="${cart.c_no}"></i>
+                                        </th>
+                                    </tr>
+                                </th:block>
+                                <!-- cart item end -->
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6" th:if="${cartList.size() != 0}">
+                    <button type="submit" class="btn btn-primary" id="cart_sel_selet_btn">Delete Items</button>
+                </div>
+
+                <div class="col-12 col-lg-5" th:if="${cartList.size() != 0}">
+                    <div class="cart-total-area mb-30">
+                        <h5 class="mb-3">Cart Totals</h5>
+                        <div class="table-responsive">
+                            <table class="table mb-3">
+                                <tbody>
+                                    <tr>
+                                        <td>Sub Total</td>
+                                        <td id="sub_total" th:text="&#8361; + ${tot_price}"></td> 
+                                    </tr> 
+                                    <tr>
+                                        <td>Shipping</td>
+                                        <td id="shipping_pay">
+                                        <span th:if="${tot_price < 50000 and tot_price > 0}">
+                                            &#8361;2500
+                                        </span>
+                                        <span th:if="${tot_price >= 50000 or tot_price == 0}">
+                                            &#8361;0
+                                        </span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td id="cart_total" th:text="&#8361; + ${all_total}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="" class="btn btn-primary d-block" id="cart_checkout_btn">Proceed To Checkout</a>
+                        <form id="cart_checkout_form" method="post">
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+						</form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Cart Area End -->
+
+    <!-- Footer Area -->
+    <th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <th:block th:replace="common/include_common_script :: script"></th:block>
+    <script src="js/shop/cart.js"></script>
+
+</body>
+
+</html>

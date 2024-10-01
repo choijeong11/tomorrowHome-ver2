@@ -1,0 +1,32 @@
+.form-group.flex {
+    display: flex;
+}
+
+.form-group.flex input.form-control {
+    flex: 1; /* 남은 공간을 차지하도록 */
+}
+
+.form-group.flex .btn {
+    margin-left: 5px;
+}
+
+.my-account-area.section_padding_100_50 {
+	min-height: 50vh;
+}
+
+.verification_code_group {
+	margin-left: 20px;
+	display: none;
+}
+
+.verification_code_group span {
+	margin-left: 20px;
+	font-size: small;
+	color: red;
+}
+
+#find_pw_container {
+	font-size: small;
+	color: red;
+	display: none;
+}

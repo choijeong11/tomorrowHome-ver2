@@ -1,0 +1,176 @@
+<div th:fragment="header">
+	
+<!-- Header Area -->
+<header class="header_area">
+	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+	<!-- Top Header Area -->
+	<div class="top-header-area">
+		<div class="container h-100">
+			<div class="row h-100 align-items-center">
+				<div class="col-6">
+					<div class="welcome-note">
+						<span class="popover--text" data-toggle="popover"
+							data-content="Welcome to Bigshop ecommerce template."><i
+							class="icofont-info-square"></i></span> 
+							<span class="text">Welcome to tomorrowHome.</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main Menu -->
+	<div class="bigshop-main-menu">
+		<div class="container">
+			<div class="classy-nav-container breakpoint-off">
+				<nav class="classy-navbar" id="bigshopNav">
+
+					<!-- Nav Brand -->
+					<a th:href="@{/index}" class="nav-brand header_menu">
+					    <img th:src="@{/img/core-img/logo.jpg}" alt="logo" id="logo_img" style="width:190px;height:50px;">
+					</a>
+
+					<!-- Toggler -->
+					<div class="classy-navbar-toggler">
+						<span class="navbarToggler"><span></span><span></span><span></span></span>
+					</div>
+
+					<!-- Menu -->
+					<div class="classy-menu">
+						<!-- Close -->
+						<div class="classycloseIcon">
+							<div class="cross-wrap">
+								<span class="top"></span><span class="bottom"></span>
+							</div>
+						</div>
+				
+						<!-- Nav -->
+						<div class="classynav">
+							<ul>
+							    <li><a th:href="@{/index}">Home</a></li>
+							    <li><a th:href="@{/product_list(pageno=1)}" class="header_menu">Shop</a></li>
+							    <li th:if="${#strings.isEmpty(sM_id)}"><a href="#" class="login_check">Orders</a></li>
+							    <li th:if="${!#strings.isEmpty(sM_id)}"><a th:href="@{/order_list}" class="header_menu">Orders</a></li>
+							    <li><a th:href="@{/faq}">FAQ</a></li>
+							    <li th:if="${#strings.isEmpty(sM_id)}"><a href="#" class="login_check">Board</a></li>
+							    <li th:if="${!#strings.isEmpty(sM_id)}"><a th:href="@{/qna_list}" class="header_menu">Board</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- Hero Meta -->
+					<div class="hero_meta_area ml-auto d-flex align-items-center justify-content-end">
+						<!-- Search -->
+						<div class="search-area">
+							<div class="search-btn header">
+								<i class="icofont-search"></i>
+							</div>
+							<!-- Form -->
+							<div class="search-form">
+								<form id="header_search_form" method="post">
+									<input type="search" class="form-control" name="search" placeholder="상품검색">
+									<input type="submit" class="d-none" value="Send">
+									<input type="hidden" name="pageno" value="1">
+								</form>
+							</div>
+						</div>
+
+						<!-- Wishlist -->
+						<div class="wishlist-area">
+							<a th:href="@{${#strings.isEmpty(sM_id) ? '#' : '/wishlist_view'}}" class="wishlist-btn" th:classappend="${#strings.isEmpty(sM_id) ? 'login_check' : 'header_menu'}">
+							    <i class="icofont-heart"></i>
+							</a>
+						</div>
+
+						<!-- Cart -->
+						
+						<div class="cart-area">
+							<div class="cart--btn">
+								<a th:href="@{${#strings.isEmpty(sM_id) ? '#' : '/cart_view'}}" th:classappend="${#strings.isEmpty(sM_id) ? 'login_check' : 'header_menu'}">
+                                    <i class="icofont-cart"></i>
+                                    <span th:if="${!#strings.isEmpty(sM_id) and cartList != null}" class="cart_quantity" th:text="${cartList.size()}"></span>
+                                </a>
+							</div>
+ 
+							<!-- Cart Dropdown Content -->
+							<th:block th:with="tot_price=${totalPrice}">
+							<div class="cart-dropdown-content" th:if="${!#strings.isEmpty(sM_id) and !#lists.isEmpty(cartList)}">
+							    <ul class="cart-list">
+							            <th:block th:each="cart : ${cartList}">
+							                <th:block th:with="item_total=${cart.c_qty * cart.product.p_price}">
+											<th:block th:with="item_total=${item_total != null ? item_total : 0}">
+							                    <li th:id="'header_cart_item_' + ${cart.c_no}">
+							                        <div class="cart-item-desc">
+							                            <a th:href="@{/product_detail(p_no=${cart.product.p_no})}" class="image">
+							                                <img th:src="@{'/img/p_img/' + ${cart.product.imageList[0].im_name}}" class="cart-thumb" alt="">
+							                            </a>
+							                            <div>
+							                                <a th:href="@{/product_detail(p_no=${cart.product.p_no})}" th:text="${cart.product.p_name}"></a>
+							                                <p>
+							                                    <span th:text="${cart.c_qty}"></span> x - 
+							                                    <span class="price" th:text="${#numbers.formatInteger(item_total, 0, 'COMMA')}">&#8361;</span>
+															 </p>
+							                            </div>
+							                        </div> 
+							                        <span class="dropdown-product-remove" th:attr="c_no=${cart.c_no}"><i class="icofont-bin"></i></span>
+							                    </li>
+							                   <!-- <th:block th:with="tot_price=${tot_price + item_total}"></th:block>-->
+							                </th:block>
+							            </th:block>
+							        </th:block>
+							    </ul>
+							    <div class="cart-pricing my-4">
+							        <ul>
+							            <li>
+							                <span>Sub Total:</span>
+							                <span th:text="'&#8361;' + ${#numbers.formatInteger(tot_price, 0, 'COMMA')}"></span>
+							            </li>
+							            <li>
+							                <span>Shipping:</span>
+							                <span th:if="${tot_price < 50000 && tot_price > 0}" th:text="'&#8361;' + ${#numbers.formatInteger(2500, 0, 'COMMA')}"></span>
+							                <span th:if="${tot_price >= 50000 || tot_price == 0}" th:text="'&#8361;0'"></span>
+							            </li>
+							            <li>
+							                <span>Total:</span>
+							                <span th:text="'&#8361;' + ${#numbers.formatInteger(tot_price + (tot_price < 50000 && tot_price > 0 ? 2500 : 0), 0, 'COMMA')}"></span>
+							            </li>
+							        </ul>
+							    </div>
+							    <div class="cart-box">
+							        <a href="#" id="header_checkout_btn" class="btn btn-primary d-block" th:data-size="${cartList.size()}">Checkout</a>
+							        <form th:action="@{/order_create}" method="post" id="header_order_create_form">
+										<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+							            <input type="hidden" name="buyType" value="cart">
+							        </form>
+							    </div>
+							</div>
+							</th:block>
+						</div>
+
+						<!-- Account -->
+						<div class="account-area">
+							<div class="user-thumbnail">
+							    <a th:href="@{${#strings.isEmpty(sM_id) ? '/login_form' : '#'}}">
+							        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16" th:if="${#strings.isEmpty(sM_id)}">
+							            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+							        </svg>
+							        <img th:src="@{/img/bg-img/bono.jpeg}" alt="" th:if="${!#strings.isEmpty(sM_id)}">
+							    </a>
+							</div>
+							<ul class="user-meta-dropdown" th:if="${!#strings.isEmpty(sM_id)}">
+							    <li class="user-title"><span>Hello,</span> <span th:text="${sMember != null ? sMember.m_name : ''}">🙂</span></li> 
+							    <li><a th:href="@{/my_account}" class="header_menu">My Account</a></li>
+							    <li><a th:href="@{/order_list}" class="header_menu">Orders List</a></li>
+							    <li><a th:href="@{/wishlist_view}" class="header_menu">Wishlist</a></li>
+							    <li><a th:href="@{/member_logout}" class="header_menu"><i class="icofont-logout"></i> Logout</a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			</div>
+		</div>
+	</div>
+</header>
+<!-- Header Area End -->
+
+</div>

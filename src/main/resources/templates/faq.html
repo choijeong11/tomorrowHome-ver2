@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- include_common_top -->
+    <th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+    <th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+
+    <!-- Search Question Area -->
+    <section class="faq_quesition_search_area section_padding_100 bg-img bg-overlay" 
+             th:style="'background-image: url(' + @{/img/bg-img/1.jpg} + ');'">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9 col-lg-6">
+                    <div class="faq_quesition_search_form">
+                        <h2>Frequently Asked Questions</h2>
+                        <p style="text-align:center">❔</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Search Question Area -->
+
+    <!-- FAQ Area -->
+    <section class="faq--area section_padding_100_70">
+        <div class="container">
+            <div class="row">
+                <!-- Single FAQ Area -->
+                <div class="col-12 col-md-6" th:each="faq : ${faqList}">
+                    <div class="single-faq mb-30">
+                        <h6 th:text="${faq.question}">What should I do if I receive a damaged parcel?</h6>
+                        <p th:text="${faq.answer}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia velit magnam cum consequuntur ad ipsum!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FAQ Area End -->
+
+    <section class="cannot_find_answer section_padding_100 bg-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="cannot_find_text text-center">
+                        <h3 class="mb-3">Cann't find answer? Submit a Request.</h3>
+                        <i class="icofont-live-support"></i>
+                        <a href="#" class="btn btn-primary" id="qna_board_link">QnA Board</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Area -->
+    <th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <th:block th:replace="common/include_common_script :: script"></th:block>
+    <script th:inline="javascript">
+        $("#qna_board_link").on("click", function(e){
+            if(!check_session()){
+                ToastConfirm.fire({ icon: 'question', 
+                        title: "로그인이 필요한 페이지입니다.\n 로그인 하시겠습니까?"}).then((result) => {
+                        if(result.isConfirmed){
+                            location.href = "login_form";
+                        }
+                        e.preventDefault();
+                        $(this).blur();
+                    });
+                return;
+            }else{
+                location.href = "qna_list";
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+
+</html>

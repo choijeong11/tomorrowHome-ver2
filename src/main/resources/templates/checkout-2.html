@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- include_common_top -->
+    <th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+    <link rel="stylesheet" href="css/shop/order.css">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+    <th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+
+    <!-- Breadcumb Area -->
+    <div class="breadcumb_area">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <h5>Checkout</h5>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                        <li class="breadcrumb-item active">Checkout</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Area -->
+
+    <!-- Checkout Step Area -->
+    <div class="checkout_steps_area">
+        <a class="active" href="checkout-2.html"><i class="icofont-check-circled"></i> Orderer</a>
+        <a><i class="icofont-check-circled"></i> Reciever</a>
+        <a><i class="icofont-check-circled"></i> Payment</a>
+        <a><i class="icofont-check-circled"></i> Confirm</a>
+        <a><i class="icofont-check-circled"></i> Complete</a>
+    </div>
+
+    <!-- Checkout Area -->
+    <div class="checkout_area section_padding_100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="checkout_details_area clearfix">
+                        <h5 class="mb-4">Orderer Info</h5>
+                        <form id="orderer_info_form" method="post">
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="first_name">ID</label>
+                                    <input type="text" class="form-control o_check" id="first_name" name="m_id" readonly th:value="${sM_id}" >
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="last_name">Name</label>
+                                    <input type="text" class="form-control o_check" id="last_name" name="m_name" placeholder="Name" th:value="${sMember.m_name}" maxlength="30">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email_address">Email</label>
+                                    <input type="email" class="form-control o_check" name="m_email" id="email_address" placeholder="Email Address" th:value="${sMember.m_email}" maxlength="50">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone_number">Phone Number</label>
+                                    <input type="text" class="form-control o_check phone_number" name="m_phone" id="phone_number" min="0" th:value="${sMember.m_phone}" placeholder="- 제외 입력해주세요">
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label for="street_address">Address</label>
+                                    <input type="text" class="form-control address o_check" id="street_address" name="m_address" placeholder="Address" th:value="${sMember.m_address}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="postcode">Postcode</label>
+                                    <input type="text" class="form-control postcode o_check" id="postcode" name="m_post" placeholder="Postcode" th:value="${sMember.m_post}">
+                                </div>
+                                <div class="col-md-6 mb-3 search">
+                                    <button type="button" class="btn btn-outline-primary mb-1 searchAddr">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="checkout_pagination d-flex justify-content-end mt-50">
+                        <a href="#" id="orderer_next_btn" class="btn btn-primary mt-2 ml-2 order_next">Continue</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Checkout Area -->
+
+    <!-- Footer Area -->
+    <th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <th:block th:replace="common/include_common_script :: script"></th:block>
+    <script src="js/shop/order.js"></script>
+
+</body>
+
+</html>

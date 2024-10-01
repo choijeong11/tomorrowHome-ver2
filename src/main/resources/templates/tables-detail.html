@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- include_common_top -->
+    <th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+    <link rel="stylesheet" href="css/shop/board.css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+    <th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+
+    <!-- Breadcumb Area -->
+    <div class="breadcumb_area">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <h5>Board</h5>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                        <li class="breadcrumb-item active">Board</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Area -->
+
+    <div class="shortcodes_area section_padding_100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="shortcodes_title mb-30">
+                        <h4>QnA View</h4>
+                    </div>
+                    <div class="shortcodes_content">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="board_title" th:text="${qna.q_title}">제목</th>
+                                        <th scope="col" class="board_writer" th:text="${qna.m_id}">작성자</th>
+                                        <th scope="col" class="board_date" th:text="${qna.q_date}">날짜</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="qna_content_td" colspan="3" th:utext="${qna.q_content}">내용</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="qna_btn_container">
+                        <button th:if="${qna.m_id == sM_id}"
+                                th:data-pageno="${pageno}" th:data-q_no="${qna.q_no}" th:data-search_type="${search_type}" th:data-search_value="${search_value}"
+                                class="qna_btn update_form">수정</button>
+                        <button th:if="${qna.m_id == sM_id}"
+                                th:data-pageno="${pageno}" th:data-q_no="${qna.q_no}" th:data-search_type="${search_type}" th:data-search_value="${search_value}"
+                                class="qna_btn delete">삭제</button>
+                        <button th:data-pageno="${pageno}" th:data-q_no="${qna.q_no}" th:data-search_type="${search_type}" th:data-search_value="${search_value}"
+                                class="qna_btn reply">답글</button>
+                        <button th:data-pageno="${pageno}" th:data-search_type="${search_type}" th:data-search_value="${search_value}"
+                                class="qna_btn list">목록</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Area -->
+    <th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <th:block th:replace="common/include_common_script :: script"></th:block>
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+    <script src="js/shop/board.js"></script>
+</body>
+
+</html>

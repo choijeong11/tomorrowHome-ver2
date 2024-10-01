@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- include_common_top -->
+    <th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+    <link rel="stylesheet" href="css/shop/order.css">
+
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+    <th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+
+    <!-- Breadcumb Area -->
+    <div class="breadcumb_area">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <h5>My Account</h5>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item active">My Account</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Area -->
+
+    <!-- My Account Area -->
+    <section class="my-account-area section_padding_100_50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-3">
+                    <div class="my-account-navigation mb-50">
+                        <ul>
+                            <li><a th:href="@{/my_account}">My Account</a></li>
+                            <li><a th:href="@{/account_details}">Account Details</a></li>
+                            <li class="active"><a th:href="@{/order_list}">Orders</a></li>
+                            <li><a th:href="@{/member_logout}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-9">
+                    <div class="my-account-content mb-50">
+                        <div class="cart-table">
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Order</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Detail</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="order_list_tbody">
+                                        <tr th:if="${#lists.isEmpty(orderList)}">
+                                            <td colspan="5">등록된 주문목록이 없습니다 🙂</td>
+                                        </tr>
+										<th:block th:if="${orderList != null and #lists.size(orderList) > 0}">
+	                                        <th:block th:each="order : ${orderList}">
+	                                            <tr th:id="'order_' + ${order.o_no}">
+	                                                <th scope="row" th:text="${order.o_desc}"></th>
+	                                                <td>
+	                                                    <span th:text="${#dates.format(order.o_date, 'yyyy-MM-dd')}"></span>
+	                                                </td>
+	                                                <td th:text="${order.o_status}"></td>
+	                                                <td>
+	                                                    &#8361;<span th:text="${#numbers.formatInteger(order.o_price, 0, 'COMMA')}"></span>
+	                                                </td>
+	                                                <td>
+	                                                    <button type="button" class="btn btn-primary" 
+	                                                            th:data-toggle="modal" 
+	                                                            th:data-target="'#order_detail_modal'" 
+	                                                            th:data-o_no="${order.o_no}">
+	                                                        View
+	                                                    </button>
+	                                                </td>
+	                                            </tr>
+	                                        </th:block>
+                                        </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <th:block th:if="${!#lists.isEmpty(orderList)}">
+                        <button type="button" class="btn btn-primary mb-1" id="order_all_delete_btn">Delete All</button>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Detail Modal -->
+    <div class="shortcodes_content mb-100">
+        <div class="modal fade" id="order_detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width: 100%; width: auto; display: table;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Order detail</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Order detail data -->
+
+                        <div class="shortcodes_area section_padding_40">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="shortcodes_title mb-30">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                            </svg>
+                                            <h6>Order Info</h6>
+                                        </div>
+                                        <div class="shortcodes_content">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0 table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Desc</th>
+                                                            <th scope="col">Date</th>
+                                                            <th scope="col">Orderer ID</th>
+                                                            <th scope="col">Pay</th>
+                                                            <th scope="col">Message</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="orderer_info_body">
+                                                        <tr>
+                                                            <td scope="row">1</td>
+                                                            <td>Mark</td>
+                                                            <td>Otto</td>
+                                                            <td>@mdo</td>
+                                                            <td>@mdo</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shortcodes_area section_padding_40">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="shortcodes_title mb-30">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                            </svg>
+                                            <h6>Receiver Info</h6>
+                                        </div>
+                                        <div class="shortcodes_content">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0 table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Phone</th>
+                                                            <th scope="col">Address</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="receiver_info_body">
+                                                        <tr>
+                                                            <td scope="row">1</td>
+                                                            <td>Mark</td>
+                                                            <td>Otto</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shortcodes_area section_padding_40">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="shortcodes_title mb-30">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-right" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                            </svg>
+                                            <h6>Item Info</h6>
+                                        </div>
+                                        <div class="shortcodes_content">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0 table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col"></th>
+                                                            <th scope="col">Item</th>
+                                                            <th scope="col">Quantity</th>
+                                                            <th scope="col">Price</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="item_info_body">
+                                                        <tr>
+                                                            <th scope="row">1</th>
+                                                            <td>Mark</td>
+                                                            <td>Otto</td>
+                                                            <td>@mdo</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row" colspan="4">total</th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order detail data -->
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="order_delete_btn">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Order Detail Modal End -->
+
+    <!-- Footer Area -->
+    <th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <th:block th:replace="common/include_common_script :: script"></th:block>
+    <script src="js/shop/order.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- include_common_top -->
+    <th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+    <link rel="stylesheet" href="css/shop/board.css">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+    <th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+
+    <!-- Breadcumb Area -->
+    <div class="breadcumb_area">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <h5>Board</h5>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index">Home</a></li>
+                        <li class="breadcrumb-item active">Board</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Area -->
+
+    <div class="shortcodes_area section_padding_100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="shortcodes_title mb-30">
+                        <h4>QnA board</h4>
+                        <span id="qna_total_count">총 [[${qnaList.totRecordCount}]] 게시글</span>
+                    </div>
+                    <div class="shortcodes_content">
+                        <div class="table-responsive">
+                            <table class="table mb-0 table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="board_no">번호</th>
+                                        <th scope="col" class="board_title">제목</th>
+                                        <th scope="col" class="board_writer">작성자</th>
+                                        <th scope="col" class="board_date">날짜</th>
+                                        <th scope="col" class="board_count">조회수</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="qna_list_tbody">
+                                <!-- No records message -->
+                                <td th:if="${qnaList.totRecordCount == 0}" colspan="5" style="text-align:center">게시글이 존재하지 않습니다</td>
+
+                                <!-- Board start -->
+                                <tr th:each="qna : ${qnaList.itemList}">
+                                    <th scope="row" th:text="${qna.rowNum}"></th>
+                                    <td>
+                                        <a th:href="@{/qna_view(q_no=${qna.q_no}, pageno=${qnaList.pageMaker.curPage}, search_type=${search_type}, search_value=${search_value})}">
+                                            <span th:if="${qna.q_depth > 0}">
+                                                <span th:each="i : ${#numbers.sequence(1, qna.q_depth)}">&nbsp;&nbsp;</span>
+                                                <img border="0" src="img/etc/re.gif" alt="Reply" />
+                                                &nbsp;
+                                            </span>
+                                            <span th:text="${#strings.abbreviate(qna.q_title, 25)}"></span>
+                                            <span th:if="${#dates.format(toDay, 'yyyy-MM-dd') eq #dates.format(qna.q_date, 'yyyy-MM-dd')}">
+                                                &nbsp;&nbsp;<span class="badge badge-danger">new</span>
+                                            </span>
+                                        </a>
+                                    </td>
+                                    <td th:text="${qna.m_id}"></td>
+                                    <td th:text="${#dates.format(qna.q_date, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${qna.q_count}"></td>
+                                </tr>
+                                <!-- Board end -->
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <select id="qna_search_sel">
+                        <option value="search_title">제목</option>
+                        <option value="search_content">내용</option>
+                        <option value="search_all">제목+내용</option>
+                        <option value="search_writer">작성자</option>
+                    </select>
+                    <input type="text" id="qna_search_txt" th:value="${search_value eq 'undefined' ? '' : search_value}" />
+                    <input type="button" class="qna_btn qna_search" th:data-pageno="${pageno}" value="검색" />
+                    <input type="button" class="qna_btn list_all" value="전체게시글" />
+                    <input type="button" class="qna_btn write_form" th:data-pageno="${pageno}" th:data-search_type="${search_type}" th:data-search_value="${search_value}" value="게시글작성" />
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-9">
+                    <!-- Shop Pagination Area -->
+                    <div class="shop_pagination_area mt-5">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination pagination-sm justify-content-center">
+
+                                <li class="page-item" th:if="${qnaList.pageMaker.prevPage > 0}">
+                                    <button class="page-link" th:onclick="changeQnaList(${qnaList.pageMaker.prevPage}, '${search_type}', '${search_value}')">
+                                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                    </button>
+                                </li>
+
+                                <li class="page-item" th:each="no : ${#numbers.sequence(qnaList.pageMaker.blockBegin, qnaList.pageMaker.blockEnd)}"
+                                    th:classappend="${qnaList.pageMaker.curPage == no ? ' active' : ''}">
+                                    <button class="page-link" th:if="${qnaList.pageMaker.curPage == no}" href="#">
+                                        <span th:text="${no}"></span>
+                                    </button>
+                                    <button class="page-link" th:if="${qnaList.pageMaker.curPage != no}" th:onclick="changeQnaPageno(this)"
+										th:data-pageno="${no}" th:data-search_type="${search_type}" th:data-search_value="${search_value}">
+                                        <span th:text="${no}"></span>
+                                    </button>
+                                </li>
+
+                                <li class="page-item" th:if="${qnaList.pageMaker.curPage < qnaList.pageMaker.totPage}">
+                                    <button class="page-link" th:onclick="changeQnaList(${qnaList.pageMaker.nextPage}, '${search_type}', '${search_value}')">
+                                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                    </button>
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+	
+    <!-- Footer Area -->
+    <th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <th:block th:replace="common/include_common_script :: script"></th:block>
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+    <script src="js/shop/board.js" defer></script>
+
+</body>
+
+</html>

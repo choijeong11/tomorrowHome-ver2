@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- include_common_top -->
+	<th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+    <link rel="stylesheet" th:href="@{/css/shop/member.css}">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+  	<th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+
+    <!-- Breadcumb Area -->
+    <div class="breadcumb_area">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <h5>Login &amp; Register</h5>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                        <li class="breadcrumb-item active">Login &amp; Register</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Area -->
+
+    <!-- Login Area -->
+    <div class="bigshop_reg_log_area section_padding_100_50">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="login_form mb-50">
+                        <h5 class="mb-3" style="display:inline-block">Login</h5>
+
+                        <form id="member_login_form" method="post" th:action="@{/login}">
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            
+							<div class="form-group">
+                                <input type="text" class="form-control" name="username" th:value="${cookieId}" placeholder="ID" maxlength="20">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password" placeholder="password" maxlength="20">
+                            </div>
+							<div th:if="${loginMsg != null}">
+					            <p th:text="${loginMsg}" style="color: red;"></p>
+					        </div>
+                            <button type="submit" id="login_btn" class="btn btn-primary btn-sm">Login</button>
+                        </form>
+                         <div class="forget_member mt-15">
+                            <a href="javascript:void(0)" id="find_id">아이디찾기</a> / 
+							<a href="javascript:void(0)" id="find_pw">비밀번호찾기</a>
+                        </div>
+                    </div>
+                </div>
+				
+				<!-- 아이디/비밀번호 찾기 모달 시작 -->
+				<div class="modal fade" id="findModal" tabindex="-1" role="dialog" aria-labelledby="findIdModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="findModalLabel"></h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <form id="findForm">
+				          <div class="form-group">
+				            <label for="find_email">* 가입시 인증한 이메일 주소를 입력해주세요.</label>
+				            <input type="email" name="find_email" class="form-control" id="find_email" value="" required>
+				            <input type="hidden" name="find_type">
+				          </div>
+						  <div id="find_pw_container">
+							  <div class="form-group">
+								<label for="temp_pw">* 발급된 임시 비밀번호를 입력하세요.</label>
+								<input type="password" name="temp_pw" class="form-control" id="temp_pw" value="" placeholder="임시 비밀번호" />
+							  </div>
+							  <div class="form-group">
+								<label for="temp_pw">* 변경할 비밀번호를 입력하세요.</label>
+								<input type="password" name="new_pw" class="form-control" id="new_pw" value="" placeholder="비밀번호" />
+								<input type="password" class="form-control" id="new_pw_check" value="" placeholder="비밀번호 확인" />
+							  </div>
+						  </div>
+				        </form>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" id="findSendSubmit" class="btn btn-primary">이메일 전송</button>
+				        <button type="button" id="findPwSubmit" class="btn btn-primary">비밀번호 변경</button>
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<!-- 아이디/비밀번호 찾기 모달 종료 -->
+
+                <div class="col-12 col-md-6">
+                    <div class="login_form mb-50">
+                        <h5 class="mb-3" style="display:inline-block">Register</h5>
+                        <form id="member_register_form" method="post">
+							<div class="form-group">
+                                <input type="text" class="form-control m_check" id="m_id" name="m_id" th:value="${fMember ne null ? fMember.m_id : ''}" placeholder="ID" maxlength="20">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control m_check" id="m_password" name="m_password" th:value="${fMember ne null ? fMember.m_password : ''}" placeholder="password" maxlength="20">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control m_check" id="m_name" name="m_name" th:value="${fMember ne null ? fMember.m_name : ''}" placeholder="name" maxlength="30">
+                            </div>
+                            <div class="form-group flex">
+                                <input type="email" class="form-control m_check" id="m_email" name="m_email" th:value="${fMember ne null ? fMember.m_email : ''}"  placeholder="Email" maxlength="50">
+								<button type="button" class="btn btn-outline-primary mb-1 verification_mail">인증</button>
+								<input type="hidden" name="m_verified" th:value="N">
+							</div>
+                            <div class="form-group verification_code_group">
+								<input type="text" class="form-control" name="verification_code" id="verification_code" placeholder="인증코드" maxlength="6">
+								<span id="countdown_timer"></span>
+								<span id="verification_msg">인증코드 6글자를 입력하세요.</span>
+							</div>
+                            <div class="form-group">
+                                <input type="text" class="form-control address m_check" id="m_address" name="m_address" th:value="${fMember ne null ? fMember.m_address : ''}" placeholder="address">
+                            </div>
+                            <div class="form-group flex">
+                                <input type="text" class="form-control postcode m_check" id="m_post" name="m_post" th:value="${fMember ne null ? fMember.m_post : ''}" placeholder="post">
+                                <button type="button" class="btn btn-outline-primary mb-1 searchAddr">search</button>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control phone_number m_check" id="m_phone" name="m_phone" th:value="${fMember ne null ? fMember.m_phone : ''}"  placeholder="phone ( - 제외 입력해주세요)">
+                            </div>
+				            <p id="register_msg" style="color: red;"></p>
+                           
+                            <button type="submit" class="btn btn-primary btn-sm">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login Area End -->
+	
+	<div class="loading-overlay" style="display:none">
+	    <div><img src="/img/etc/load.gif" style="width:64px;height:64px;"/></div>
+	</div>
+
+    <!-- Footer Area -->
+ 	<th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+	<th:block th:replace="common/include_common_script :: script"></th:block>
+	<script th:src="@{/js/shop/member.js}"></script>
+</body>
+
+</html>

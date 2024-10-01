@@ -1,0 +1,61 @@
+<section th:fragment="related" class="you_may_like_area section_padding_0_100 clearfix">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_heading new_arrivals">
+                    <h5>You May Also Like</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="you_make_like_slider owl-carousel">
+
+                    <!-- Single Product -->
+                    <div th:each="s_product : ${productList}" class="single-product-area">
+                        <div class="product_image">
+                            <!-- Product Image -->
+                            <img class="normal_img" th:src="@{'img/p_img/' + ${s_product.imageList[0].im_name}}" alt="">
+                            <img class="hover_img" th:src="@{'img/p_img/' + ${s_product.imageList[1].im_name}}" alt="">
+
+                            <!-- Product Badge -->
+                            <div class="product_badge">
+                                <span th:text="${s_product.p_concept}"></span>
+                            </div>
+
+                            <!-- Wishlist -->
+                            <div class="product_wishlist">
+                                <a href="#" class="related_product_add_wishList" th:data-p_no="${s_product.p_no}">
+                                    <i class="icofont-heart"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Product Description -->
+                        <div class="product_description">
+                            <!-- Add to cart -->
+                            <div class="product_add_to_cart">
+                                <a href="#" class="related_product_add_cart" th:data-p_no="${s_product.p_no}">
+                                    <i class="icofont-shopping-cart"></i> Add to Cart
+                                </a>
+                            </div>
+
+                            <!-- Quick View -->
+                            <div class="product_quick_view">
+                                <a href="#" data-toggle="modal" data-target="#quickview" th:data-p_no="${s_product.p_no}">
+                                    <i class="icofont-eye-alt"></i> Quick View
+                                </a>
+                            </div>
+
+                            <p class="brand_name" th:text="${s_product.p_brand}"></p>
+                            <a th:href="@{'/product_detail?p_no=' + ${s_product.p_no}}" th:text="${s_product.p_name}"></a>
+                            <h6 class="product-price" th:text="&#8361; + ${#numbers.formatInteger(s_product.p_price, 0, 'COMMA')}"></h6>
+                        </div>
+                    </div>
+                    <!-- Single Product end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

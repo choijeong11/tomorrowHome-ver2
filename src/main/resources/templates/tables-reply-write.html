@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- include_common_top -->
+    <th:block th:replace="common/include_common_top :: top"></th:block>
+    <!-- include_common_top -->
+    <link rel="stylesheet" href="css/shop/board.css">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Header Area -->
+    <!-- 공통 헤더 포함 -->
+    <th:block th:replace="common/include_common_header :: header"></th:block>
+    <!-- Header Area End -->
+    
+    <!-- Breadcumb Area -->
+    <div class="breadcumb_area">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <div class="col-12">
+                    <h5>Board</h5>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                        <li class="breadcrumb-item active">Board</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcumb Area -->
+
+    <div class="shortcodes_area section_padding_100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="shortcodes_title mb-30">
+                        <h4>QnA reply</h4>
+                    </div>
+                    <div class="shortcodes_content">
+                        <div class="table-responsive">
+                            <form id="qna_reply_write_form" method="post" th:action="@{/qna/reply}">
+                                <table class="table mb-0 table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="board_title">
+                                                <input type="text" name="q_title" th:value="'[RE] ' + ${qna.q_title}" id="q_title_txt" placeholder=" title" maxlength="50" />
+                                            </th>
+                                            <th scope="col" class="board_writer" th:text="${sM_id}">Writer</th>
+                                            <th scope="col" class="board_date">
+                                                <span th:text="${#dates.format(toDay, 'yyyy-MM-dd')}"></span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="qna_content_td" colspan="3">
+                                                <textarea name="q_content" id="q_content_area" maxlength="1000" th:utext="${qna.q_content} + ' <br> >>> '"></textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <input type="hidden" name="pageno" th:value="${pageno}" />
+                                <input type="hidden" name="m_id" th:value="${sM_id}" />
+                                <input type="hidden" name="q_no" th:value="${q_no}" />
+                                <input type="hidden" name="search_type" th:value="${search_type}" />
+                                <input type="hidden" name="search_value" th:value="${search_value}" />
+                            </form>
+                        </div>
+                    </div>
+                    <div id="qna_btn_container">
+                        <input class="qna_btn reply_write" type="button" value="등록" />
+						<input class="qna_btn list" type="button" th:data-pageno="${pageno}" th:data-search_type="${search_type}" th:data-search_value="${search_value}" value="목록" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>     
+            
+    <!-- Footer Area -->
+    <th:block th:replace="common/include_common_bottom :: bottom"></th:block>
+    <!-- Footer Area -->
+
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <th:block th:replace="common/include_common_script :: script"></th:block>
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+    <script src="js/shop/board.js"></script>
+
+</body>
+
+</html>
