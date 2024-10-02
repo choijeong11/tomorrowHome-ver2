@@ -1,5 +1,4 @@
-<img src="https://github.com/user-attachments/assets/bd1b5b1d-cbcd-43cf-9252-9b03d789c3c9" width="35%" height="35%"> ver.2
-
+<img src="https://github.com/user-attachments/assets/1dcfe697-0cd1-4bfc-a793-e2cbd44b277b" width="35%" height="35%"> ver.2
 <br/><br/>
 
 <h2>✔️ 프로젝트 소개</h2>
