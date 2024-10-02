@@ -124,7 +124,7 @@ http://choibooboo.cafe24.com
 			</td>	
   			 <td>
 				 
-![메잉ㄴ](https://github.com/user-attachments/assets/2c67a24b-0fbb-413d-a26a-78ac6d78ad83)				
+![메잉ㄴ](https://github.com/user-attachments/assets/3ac0e0e4-00b7-42f8-a8d2-651304c0200f)			
 			</td>	
 		</tr>		
 	</table>
@@ -148,7 +148,7 @@ http://choibooboo.cafe24.com
 			</td>	
   			 <td>
 				 
-![회원](https://github.com/user-attachments/assets/2b868186-9aed-470d-8315-03de45b0253c)
+![회원](https://github.com/user-attachments/assets/f717054f-ebf0-4a96-b957-067d157d9f78)
 			</td>	
 		</tr>		
 	</table> 	
@@ -177,7 +177,7 @@ http://choibooboo.cafe24.com
 			</td>	
   			 <td>
 	
-![상품](https://github.com/user-attachments/assets/a02950b8-bcd6-4285-85e5-ee2aa9c8b8d6) 
+![상품](https://github.com/user-attachments/assets/004fef14-80d0-41d4-b326-4aa4cc4796f1)
 			</td>	
 		</tr>		
 	</table>   	
@@ -204,7 +204,7 @@ http://choibooboo.cafe24.com
 			</td>	
   			 <td>
 	
-![장바구니](https://github.com/user-attachments/assets/5134fba6-33d3-4ea6-8504-a41a990ae91b)
+![장바구니](https://github.com/user-attachments/assets/ca0e0b11-fafd-4caf-b838-f95b66a27a02)
 			</td>	
 		</tr>		
 	</table>   
@@ -224,7 +224,7 @@ http://choibooboo.cafe24.com
 			</td>	
   			 <td>
 	
-![위시리스트](https://github.com/user-attachments/assets/f47eda52-1a6c-45f3-9b94-44073f0d5db4)
+![위시리스트](https://github.com/user-attachments/assets/a64fcec8-03ff-4a2e-b234-7ebd4fd402a8)
 			</td>	
 		</tr>		
 	</table>   
@@ -246,7 +246,7 @@ http://choibooboo.cafe24.com
 			</td>	
   			 <td>
 	
-![주문](https://github.com/user-attachments/assets/aa7bdd9b-a884-4420-b4c7-3b002b8b6f27)
+![주문](https://github.com/user-attachments/assets/5e61f66a-1cfb-4937-bc30-3013b04614f8)
 			</td>	
 		</tr>		
 	</table>   
@@ -272,7 +272,7 @@ http://choibooboo.cafe24.com
 			</td>	
   			 <td>
 	
-![게시판](https://github.com/user-attachments/assets/f597ca12-5a49-4254-857a-40e7b16846db)
+![게시판](https://github.com/user-attachments/assets/1e2af146-ab0a-46b6-8150-9b322f4d3384)
 			</td>	
 		</tr>		
 	</table>   
@@ -288,7 +288,7 @@ http://choibooboo.cafe24.com
 			</td>	
   			 <td>
 	
-![오류페이지](https://github.com/user-attachments/assets/b60a9129-6a5d-420f-844c-0a418e934839)
+![오류페이지](https://github.com/user-attachments/assets/ba90154f-71e1-41de-9765-b2529ed700e8)
 			</td>	
 		</tr>		
 	</table>   
@@ -298,4 +298,4 @@ http://choibooboo.cafe24.com
 
 <h2>✔️ ERD </h2>
 
-![erd](https://github.com/user-attachments/assets/850bda2c-ad76-47f2-bc6b-ae1078d186e7)
+![erd](https://github.com/user-attachments/assets/f02b319c-b784-432c-a20b-1e0ddebe73ff)
