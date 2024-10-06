@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,11 +76,6 @@ public class OrderController {
 			cartItemList = cartList;
 		}
 		
-		// 지연 로딩된 객체를 초기화
-		for(Cart cart : cartItemList) {
-			Hibernate.initialize(cart.getProduct().getImageList()); 
-			Hibernate.initialize(cart.getProduct().getReviewList()); 
-		}
 		session.setAttribute("buyType", buyType);
 		session.setAttribute("cartItemList", cartItemList);
 			
