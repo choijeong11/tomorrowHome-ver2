@@ -30,15 +30,6 @@ public class OrderController {
 	@Autowired
 	private CartService cartService;   
 	
-	/*
-	 * <<< 주문 정보 session 저장 >>> 
-	 * - 주문시 카트 번호를 전달하기 위한 array
-	 * session.setAttribute("cart_item_noStr_array", cart_item_noStr_array); 
-	 * - 주문form에 상품정보 출력을 위한 list 
-	 * session.setAttribute("cartItemList", cartItemList);
-	 * - 주문 정보를 저장하는 Order 객체 
-	 * session.setAttribute("order", order);
-	 */
 	/**
 	 * 주문 상품 정보 저장 - 주문자 정보로 이동
 	 */
