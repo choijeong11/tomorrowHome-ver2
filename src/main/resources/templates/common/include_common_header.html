@@ -94,7 +94,7 @@
  
 							<!-- Cart Dropdown Content -->
 							<th:block th:with="tot_price=${totalPrice}">
-							<div class="cart-dropdown-content" th:if="${!#strings.isEmpty(sM_id) and !#lists.isEmpty(cartList)}">
+							<div class="cart-dropdown-content" th:if="${!#strings.isEmpty(sM_id)}">
 							    <ul class="cart-list">
 							            <th:block th:each="cart : ${cartList}">
 							                <th:block th:with="item_total=${cart.c_qty * cart.product.p_price}">
@@ -137,9 +137,8 @@
 							        </ul>
 							    </div>
 							    <div class="cart-box">
-							        <a href="#" id="header_checkout_btn" class="btn btn-primary d-block" th:data-size="${cartList.size()}">Checkout</a>
-							        <form th:action="@{/order_create}" method="post" id="header_order_create_form">
-										<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+							        <a href="#" id="header_checkout_btn" class="btn btn-primary d-block" th:attr="size=${cartList.size()}">Checkout</a>
+							        <form method="post" id="header_order_create_form">
 							            <input type="hidden" name="buyType" value="cart">
 							        </form>
 							    </div>

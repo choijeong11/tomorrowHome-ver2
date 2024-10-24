@@ -155,6 +155,10 @@ function update_common_header_cart_info(cartJsonArr){
 	let size = cartJsonArr.length;
 	let htmlBuffer = "";
 	
+	// CSRF 토큰
+	var csrfHeader = $("input[name='_csrf']").attr("name"); 
+	var csrfToken = $("input[name='_csrf']").val();  
+	
 	$(".cart--btn").html(`<a href="cart_view"><i class="icofont-cart"></i><span class="cart_quantity">${size}</span></a>`);
 	htmlBuffer += `<ul class="cart-list">`;
 	cartJsonArr.forEach(function(cart, i){
@@ -193,6 +197,7 @@ function update_common_header_cart_info(cartJsonArr){
 						<div class="cart-box">
 							<a href="" id="header_checkout_btn" class="btn btn-primary d-block" size="${size}">Checkout</a>
 							<form id="header_order_create_form" method="post">
+								<input type="hidden" name="${csrfHeader}" value="${csrfToken}"/>
 								<input type="hidden" name="buyType" value="cart" />
 							</form>
 						</div>`;
