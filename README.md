@@ -43,9 +43,9 @@ http://tomorrowhome.shop
 	<li> <h4>마이그레이션</h4> <br/>
 		<ul>
 			<li>Framework <br/>
-				<img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">	
+				<img src="https://img.shields.io/badge/spring 4.3.25-6DB33F?style=for-the-badge&logo=spring&logoColor=white">	
 				￣ 	
-				<img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
+				<img src="https://img.shields.io/badge/Spring Boot 3.0.0-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
 			</li>
 			<li>Build tool <br/>
 				<img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white">	
